@@ -2,6 +2,7 @@ import os
 
 from dotenv import load_dotenv
 from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 
 load_dotenv()
 
@@ -18,9 +19,19 @@ class DBConnectionHandler:
             DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_NAME
         )
         self.__engine = self.__create_database_engine()
+        self.session = None
 
     def __create_database_engine(self):
         return create_engine(self.__connection_string)
 
     def get_engine(self):
         return self.__engine
+
+    def __enter__(self):
+        session_make = sessionmaker(bind=self.__engine)
+        self.session = session_make()
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.session.close()
+        self.session = None
