@@ -8,7 +8,10 @@ disable=
       W0703,  # Catching too general exception Exception
       C0321,  # More than one statement on a single line
       W0221,  # Parameters differ from overridden method
-      R0801,  # Similar lines in 2 files      
+      R0801,  # Similar lines in 2 files
+      R0903,
+      E0401,
+      C0209,
 
 # Analyse import fallback blocks. This can be used to support both Python 2 and
 # 3 compatible code, which means that the block might have code that exists
