@@ -17,3 +17,8 @@ clean:
 	@rm -rf .pytest_cache
 	@rm -rf .coverage
 	@rm -rf htmlcov
+
+.PHONY: start-db
+start-db:
+	@echo "Starting server"
+	@docker compose up
