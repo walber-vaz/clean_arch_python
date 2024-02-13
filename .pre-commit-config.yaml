@@ -38,7 +38,7 @@ repos:
     hooks:
     - id: pytest
       name: pytest
-      entry: make test
+      entry: bash -c '.venv/bin/pytest -v -x -s --cov=src -vv --cov-report=term-missing'
       language: system
       types: [python]
       pass_filenames: false
