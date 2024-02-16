@@ -12,8 +12,8 @@ def test_insert_user():
     }
 
     UsersRepository().insert(
-        name=mocked_user.get("name"),
-        password=mocked_user.get("password"),
-        email=mocked_user.get("email"),
-        role=mocked_user.get("role"),
+        name=str(mocked_user.get("name")),
+        password=str(mocked_user.get("password")),
+        email=str(mocked_user.get("email")),
+        role=str(mocked_user.get("role")),
     )
