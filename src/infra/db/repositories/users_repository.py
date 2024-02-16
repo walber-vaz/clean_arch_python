@@ -10,9 +10,13 @@ class UsersRepository:
                 new_user = UsersEntity(
                     name=name, password=password, email=email, role=role
                 )
-                db_connection.session.add(new_user)
-                db_connection.session.commit()
-                db_connection.session.refresh(new_user)
+                if db_connection.session is not None:
+                    db_connection.session.add(new_user)
+                    db_connection.session.commit()
+                    db_connection.session.refresh(new_user)
+                else:
+                    raise Exception("DB connection session is None.")
             except Exception as exception:
-                db_connection.session.rollback()
+                if db_connection.session is not None:
+                    db_connection.session.rollback()
                 raise exception
