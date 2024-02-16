@@ -33,5 +33,6 @@ class DBConnectionHandler:
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        self.session.close()
+        if self.session is not None:
+            self.session.close()
         self.session = None
