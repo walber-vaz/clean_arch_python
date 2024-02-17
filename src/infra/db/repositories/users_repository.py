@@ -1,12 +1,12 @@
-from typing import Any
-
+from src.data.interfaces.users_repository import UsersRepositoryInterface
+from src.domain.models.users import Users
 from src.infra.db.entities.users import Users as UsersEntity
 from src.infra.db.settings.connection import DBConnectionHandler
 
 
-class UsersRepository:
+class UsersRepository(UsersRepositoryInterface):
     @classmethod
-    def insert(cls, name: str, password: str, email: str, role: str) -> None:
+    def insert(cls, name: str, password: str, email: str, role: str) -> Users:
         with DBConnectionHandler() as db_connection:
             try:
                 new_user = UsersEntity(
@@ -16,6 +16,7 @@ class UsersRepository:
                     db_connection.session.add(new_user)
                     db_connection.session.commit()
                     db_connection.session.refresh(new_user)
+                    return new_user
                 else:
                     raise Exception("DB connection session is None.")
             except Exception as exception:
@@ -24,7 +25,7 @@ class UsersRepository:
                 raise exception
 
     @classmethod
-    def select(cls, id: int) -> Any:
+    def select(cls, id: int) -> list[Users]:
         with DBConnectionHandler() as db_connection:
             try:
                 if db_connection.session is None:
